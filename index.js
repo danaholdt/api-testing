@@ -21,7 +21,7 @@ const CLIENT_SECRET = process.env.CLIENT_SECRET;
 console.log(PORT);
 
 const REDIRECT_URI = `http://localhost:${PORT}/oauth-callback`;
-const authUrl = `https://app.hubspot.com/oauth/authorize?client_id=${CLIENT}&redirect_uri=http://localhost:${PORT}/oauth-callback&scope=contacts`;
+const authUrl = `https://app.hubspot.com/oauth/authorize?client_id=${CLIENT_ID}&redirect_uri=http://localhost:${PORT}/oauth-callback&scope=contacts`;
 
 // const authUrl =
 //   'https://app.hubspot.com/oauth/authorize' +
