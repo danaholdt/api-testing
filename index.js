@@ -13,13 +13,15 @@ app.set('view engine', 'pug');
 app.use(express.json()); //Used to parse JSON bodies
 app.use(express.urlencoded( {extended: true} )); //Parse URL-encoded bodies
 
-const port = process.env.PORT || 3000;
-const hapikey = process.env.HAPI_KEY;
+const PORT = process.env.PORT || 3000;
+const HAPI_KEY = process.env.HAPI_KEY;
 const CLIENT_ID = process.env.CLIENT_ID;
 const CLIENT_SECRET = process.env.CLIENT_SECRET;
 
-const REDIRECT_URI = `http://localhost:${port}/oauth-callback`;
-const authUrl = `https://app.hubspot.com/oauth/authorize?client_id=1fea11cd-cae5-450b-b16d-04534de966f4&redirect_uri=http://localhost:${port}/oauth-callback&scope=contacts`;
+console.log(PORT);
+
+const REDIRECT_URI = `http://localhost:${PORT}/oauth-callback`;
+const authUrl = `https://app.hubspot.com/oauth/authorize?client_id=${CLIENT}&redirect_uri=http://localhost:${PORT}/oauth-callback&scope=contacts`;
 
 // const authUrl =
 //   'https://app.hubspot.com/oauth/authorize' +
@@ -37,7 +39,7 @@ app.use(session({
 }));
 
 app.get('/contacts', async (req, res) => {
-    const contacts = `https://api.hubapi.com/contacts/v1/lists/all/contacts/recent?hapikey=${hapikey}`;
+    const contacts = `https://api.hubapi.com/contacts/v1/lists/all/contacts/recent?hapikey=${HAPI_KEY}`;
     try {
         const resp = await axios.get(contacts);
         const data = resp.data;
@@ -51,7 +53,7 @@ app.get('/contacts', async (req, res) => {
 app.get('/update', async (req, res) => { 
     // http://localhost:3000/update?email=rick@crowbars.net
     const email = req.query.email;
-    const getContact = `https://api.hubapi.com/contacts/v1/contact/email/${email}/profile?hapikey=${hapikey}`;
+    const getContact = `https://api.hubapi.com/contacts/v1/contact/email/${email}/profile?hapikey=${HAPI_KEY}`;
     try {
         const response = await axios.get(getContact);
         const data = response.data;
@@ -73,7 +75,7 @@ app.post('/update', async (req, res) => {
 
     const email = req.query.email;
     //console.log(email);
-    const apiCall = `https://api.hubapi.com/contacts/v1/contact/email/${email}/profile?hapikey=${hapikey}`;
+    const apiCall = `https://api.hubapi.com/contacts/v1/contact/email/${email}/profile?hapikey=${HAPI_KEY}`;
 
     try{
         await axios.post(apiCall, propUpdate);
@@ -110,7 +112,6 @@ app.get('/', async (req, res) => {
         }
     } else {
         res.render('oauth', { authUrl });
-        console.log( port );
     }
 });
 // 2. Get temporary Auth code from OAuth server
@@ -140,5 +141,4 @@ app.get('/oauth-callback', async (req, res) => {
 });
 
 
-
-app.listen(process.env.PORT, () => console.log(`listening on http://localhost:${port}`));
+app.listen( process.env.PORT, () => console.log(`listening on http://localhost:${PORT}`));
