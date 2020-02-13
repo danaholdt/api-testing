@@ -13,7 +13,7 @@ app.set('view engine', 'pug');
 app.use(express.json()); //Used to parse JSON bodies
 app.use(express.urlencoded( {extended: true} )); //Parse URL-encoded bodies
 
-const port = process.env.PORT;
+const port = process.env.PORT || 3000;
 const hapikey = process.env.HAPI_KEY;
 const CLIENT_ID = process.env.CLIENT_ID;
 const CLIENT_SECRET = process.env.CLIENT_SECRET;
@@ -36,54 +36,54 @@ app.use(session({
 
 }));
 
-// app.get('/contacts', async (req, res) => {
-//     const contacts = `https://api.hubapi.com/contacts/v1/lists/all/contacts/recent?hapikey=${hapikey}`;
-//     try {
-//         const resp = await axios.get(contacts);
-//         const data = resp.data;
-//         res.json(data);
-//     } catch(err){
-//         console.error(err);
-//     }
-// });
+app.get('/contacts', async (req, res) => {
+    const contacts = `https://api.hubapi.com/contacts/v1/lists/all/contacts/recent?hapikey=${hapikey}`;
+    try {
+        const resp = await axios.get(contacts);
+        const data = resp.data;
+        res.json(data);
+    } catch(err){
+        console.error(err);
+    }
+});
 
 
-// app.get('/update', async (req, res) => { 
-//     // http://localhost:3000/update?email=rick@crowbars.net
-//     const email = req.query.email;
-//     const getContact = `https://api.hubapi.com/contacts/v1/contact/email/${email}/profile?hapikey=${hapikey}`;
-//     try {
-//         const response = await axios.get(getContact);
-//         const data = response.data;
-//         res.render('update', { userEmail: email, favoriteBook: data.properties.favorite_book.value });
-//     } catch(err) {
-//         console.error(err);
-//     }
-// });
+app.get('/update', async (req, res) => { 
+    // http://localhost:3000/update?email=rick@crowbars.net
+    const email = req.query.email;
+    const getContact = `https://api.hubapi.com/contacts/v1/contact/email/${email}/profile?hapikey=${hapikey}`;
+    try {
+        const response = await axios.get(getContact);
+        const data = response.data;
+        res.render('update', { userEmail: email, favoriteBook: data.properties.favorite_book.value });
+    } catch(err) {
+        console.error(err);
+    }
+});
 
-// app.post('/update', async (req, res) => {
-//     const propUpdate = {
-//          "properties": [
-//              {
-//                  "property": "favorite_book",
-//                  "value": req.body.newVal
-//              }
-//          ]
-//     }   
+app.post('/update', async (req, res) => {
+    const propUpdate = {
+         "properties": [
+             {
+                 "property": "favorite_book",
+                 "value": req.body.newVal
+             }
+         ]
+    }   
 
-//     const email = req.query.email;
-//     //console.log(email);
-//     const apiCall = `https://api.hubapi.com/contacts/v1/contact/email/${email}/profile?hapikey=${hapikey}`;
+    const email = req.query.email;
+    //console.log(email);
+    const apiCall = `https://api.hubapi.com/contacts/v1/contact/email/${email}/profile?hapikey=${hapikey}`;
 
-//     try{
-//         await axios.post(apiCall, propUpdate);
-//         //res.sendStatus(200);
-//         res.redirect('back');
-//     } catch(err) {
-//         console.error(err);
-//     }
+    try{
+        await axios.post(apiCall, propUpdate);
+        //res.sendStatus(200);
+        res.redirect('back');
+    } catch(err) {
+        console.error(err);
+    }
 
-// }); 
+}); 
 
 const isAuthorized = (userId) => {
     return tokenStore[userId] ? true:false;
