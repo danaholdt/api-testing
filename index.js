@@ -37,10 +37,10 @@ const DOMAIN = process.env.DOMAIN || "http://localhost:" ;
 //     DOMAIN = url.origin;
 // }
 
-console.log(DOMAIN);
 
 const REDIRECT_URI = `${DOMAIN}${PORT}/oauth-callback`;
-const authUrl = `https://app.hubspot.com/oauth/authorize?client_id=${CLIENT_ID}&redirect_uri=${DOMAIN}${PORT}/oauth-callback&scope=contacts`;
+const authUrl = `https://app.hubspot.com/oauth/authorize?client_id=1fea11cd-cae5-450b-b16d-04534de966f4&redirect_uri=https://silly-bird-143.herokuapp.com/oauth-callback&scope=contacts`
+//const authUrl = `https://app.hubspot.com/oauth/authorize?client_id=${CLIENT_ID}&redirect_uri=${DOMAIN}${PORT}/oauth-callback&scope=contacts`;
 
 // const authUrl =
 //   'https://app.hubspot.com/oauth/authorize' +
