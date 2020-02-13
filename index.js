@@ -5,6 +5,17 @@ const axios = require('axios');
 const querystring = require('querystring');
 const session = require('express-session');
 
+const url = require('url');
+
+// function getFormattedUrl(req) {
+//     return url.format({
+//         protocol: req.protocol,
+//         host: req.get('host')
+//     });
+// }
+
+// res.redirect(getFormattedUrl(req));
+
 const app = express();
 
 //app.set('views', './views');
@@ -14,14 +25,26 @@ app.use(express.json()); //Used to parse JSON bodies
 app.use(express.urlencoded( {extended: true} )); //Parse URL-encoded bodies
 
 const PORT = process.env.PORT || 3000;
+
 const HAPI_KEY = process.env.HAPI_KEY;
 const CLIENT_ID = process.env.CLIENT_ID;
 const CLIENT_SECRET = process.env.CLIENT_SECRET;
+const DOMAIN = url.origin || "http://localhost:" ;
 
-console.log(PORT);
+// function getFee(isMember) { 
+//     return (isMember ? '$2.00' : '$10.00');
+// }
 
-const REDIRECT_URI = `http://localhost:${PORT}/oauth-callback`;
-const authUrl = `https://app.hubspot.com/oauth/authorize?client_id=${CLIENT_ID}&redirect_uri=http://localhost:${PORT}/oauth-callback&scope=contacts`;
+// if (PORT === 3000){
+//     DOMAIN = "http://localhost:"
+// } else {
+//     DOMAIN = url.origin;
+// }
+
+console.log(DOMAIN);
+
+const REDIRECT_URI = `${DOMAIN}${PORT}/oauth-callback`;
+const authUrl = `https://app.hubspot.com/oauth/authorize?client_id=${CLIENT_ID}&redirect_uri=${DOMAIN}${PORT}/oauth-callback&scope=contacts`;
 
 // const authUrl =
 //   'https://app.hubspot.com/oauth/authorize' +
