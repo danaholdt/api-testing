@@ -1,0 +1,11 @@
+doctype html
+html(lang="en")
+  head
+    title Update account info
+  body
+    p User: #{userEmail}
+    p Favorite Book: #{favoriteBook}
+    form(method="POST")
+        label(for="newVal") New Favorite Book
+        input(type="text" name="newVal")
+        input.btn.btn-success(type='submit', value='Save')
