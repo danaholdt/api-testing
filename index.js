@@ -110,6 +110,7 @@ app.get('/', async (req, res) => {
         }
     } else {
         res.render('oauth', { authUrl });
+        console.log( port );
     }
 });
 // 2. Get temporary Auth code from OAuth server
