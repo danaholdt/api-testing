@@ -29,11 +29,7 @@ const PORT = process.env.PORT || 3000;
 const HAPI_KEY = process.env.HAPI_KEY;
 const CLIENT_ID = process.env.CLIENT_ID;
 const CLIENT_SECRET = process.env.CLIENT_SECRET;
-const DOMAIN = url.origin || "http://localhost:" ;
-
-// function getFee(isMember) { 
-//     return (isMember ? '$2.00' : '$10.00');
-// }
+const DOMAIN = process.env.DOMAIN || "http://localhost:" ;
 
 // if (PORT === 3000){
 //     DOMAIN = "http://localhost:"
